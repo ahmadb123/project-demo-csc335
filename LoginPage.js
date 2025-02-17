@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiUrl = 'http://localhost:8080';
+
+const storeData = async (key, value) => {
+    try {
+        await AsyncStorage.setItem(key, value);
+    } catch (e) {
+        console.error("Error", e);
+    }
+};
 
 function togglePassword() {
     let password = document.getElementById("passwordInput");
@@ -29,7 +38,9 @@ function LoginPage() {
             });
             if (response.ok) {
                 const data = await response.json();
-                nav.navigate('homepage');
+                const username = data.username;
+                await storeData('username', username);
+                nav.navigate('HomePage');
             } else if (response.status === 401) {
                 toast.error('Incorrect Password. Please try again.');
             } else {
