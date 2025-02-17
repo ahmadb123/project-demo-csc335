@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import styles from '../../assets/HomePageStyles';
+import styles from './assets/HomePageStyles';
 // import { useNavigation } from '@react-navigation/native';
 
 function HomePage() {
@@ -37,6 +37,7 @@ function HomePage() {
       {/* Footer */}
       <Text style={styles.footer}>About: Created by Ahmad Bishara</Text>
     </ScrollView>
+
   );
 }
 

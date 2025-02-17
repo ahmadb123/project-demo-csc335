@@ -1,26 +1,41 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
 import AuthPage from './AuthPage'; 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import LoginPage from './LoginPage'; 
+import HomePage from './HomePage'; 
+const Stack = createNativeStackNavigator();
 
-function App(){
-  return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        <AuthPage />
-        <StatusBar style="auto" />
-      </View>
-    </NavigationContainer>
+function MyStack(){
+  return(
+    <Stack.Navigator>
+      <Stack.Screen
+       name="AuthPage"
+       component={AuthPage}
+       options={{title: 'AuthPage'}}
+       />
+       <Stack.Screen
+        name="LoginPage"
+        component={LoginPage}
+        options={{title: 'LoginPage'}}
+        />
+        <Stack.Screen
+        name='HomePage'
+        component={HomePage}
+        options={{title: 'HomePage'}}
+        />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
+};
+
 
 export default App;

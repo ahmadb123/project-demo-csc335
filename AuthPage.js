@@ -1,11 +1,14 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const apiUrl = 'http://localhost:8080';
 
+
 function AuthPage() {
+  const nav = useNavigation();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -68,6 +71,13 @@ function AuthPage() {
       <TouchableOpacity style={styles.submitButton} onPress={register}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+
+      <Text>Already user?</Text>
+        <Button
+                  title = "Go to Login"
+                  onPress={() => nav.navigate('LoginPage')}
+        />
+
     </View>
   );
 }

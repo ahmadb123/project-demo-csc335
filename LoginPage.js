@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
 
 const apiUrl = 'http://localhost:8080';
 
@@ -15,10 +14,10 @@ function togglePassword() {
 }
 
 function LoginPage() {
+    const nav = useNavigation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation(); 
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -30,10 +29,7 @@ function LoginPage() {
             });
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('jwtToken', data.token);
-                localStorage.setItem('username', data.username);
-                localStorage.setItem('userId', data.id);
-                navigate('/landingpage');
+                nav.navigate('homepage');
             } else if (response.status === 401) {
                 toast.error('Incorrect Password. Please try again.');
             } else {
@@ -47,37 +43,59 @@ function LoginPage() {
     };
 
     return (
-        <div className="login-container">
-            <h2> Sign in </h2>
-            <form onSubmit={handleLogin}>
-                <div className="form-group">
-                    <label>Email or Username</label>
-                    <input 
-                        type="text"
-                        placeholder="Email/Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input 
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        id="passwordInput"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div className="show-password">
-                    <input type="checkbox" onClick={togglePassword} />
-                    <label>Show Password</label>
-                </div>
-                <button type="submit" className="submit-button">Login</button>
-            </form>
-            <ToastContainer position="top-center" />
-        </div>
+        <View style={styles.container}>
+            <Text style={styles.title}>Sign in</Text>
+            <View style={styles.formGroup}>
+                <Text>Email or Username</Text>
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Email/Username"
+                    value={username}
+                    onChangeText={setUsername}
+                />
+            </View>
+            <View style={styles.formGroup}>
+                <Text>Password</Text>
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Enter your password"
+                    value={password}
+                    secureTextEntry={!showPassword}
+                    onChangeText={setPassword}
+                />
+            </View>
+            <TouchableOpacity style={styles.showPassword} onPress={() => setShowPassword(!showPassword)}>
+                <Text>{showPassword ? "Hide" : "Show"} Password</Text>
+            </TouchableOpacity>
+            <Button title="Login" onPress={handleLogin} />
+            <Button title="Go Back" onPress={() => nav.goBack('homepage')} />
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 16,
+    },
+    title: {
+        fontSize: 24,
+        marginBottom: 16,
+        textAlign: 'center',
+    },
+    formGroup: {
+        marginBottom: 16,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 8,
+        borderRadius: 4,
+    },
+    showPassword: {
+        marginBottom: 16,
+    },
+});
 
 export default LoginPage;
