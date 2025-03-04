@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import LoginPage from './LoginPage'; 
 import HomePage from './HomePage'; 
+import LandingPage from './LandingPage';
 const Stack = createNativeStackNavigator();
 
 function MyStack(){
@@ -23,6 +24,11 @@ function MyStack(){
         name='HomePage'
         component={HomePage}
         options={{title: 'HomePage'}}
+        />
+        <Stack.Screen
+        name='LandingPage' // Corrected screen name
+        component={LandingPage}
+        options={{title: 'LandingPage'}}
         />
     </Stack.Navigator>
   );

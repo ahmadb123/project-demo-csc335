@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -23,7 +22,7 @@ function AuthPage() {
       });
       if (response.ok) {
         console.log("complete success");
-        navigation.navigate('Login');
+        navigation.navigate('LoginPage');
       } else {
         const data = await response.json();
         console.error("error" + data);
@@ -85,7 +84,6 @@ function AuthPage() {
 const styles = StyleSheet.create({
     registerContainer: {
       padding: 20,
-      // add additional styling as needed
     },
     heading: {
       fontSize: 24,

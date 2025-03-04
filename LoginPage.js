@@ -3,8 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const apiUrl = 'http://localhost:8080';
-
+const apiUrl = "http://localhost:8080";
 const storeData = async (key, value) => {
     try {
         await AsyncStorage.setItem(key, value);
@@ -38,9 +37,13 @@ function LoginPage() {
             });
             if (response.ok) {
                 const data = await response.json();
+                const token = data.token;
+                const userId = data.id; 
                 const username = data.username;
+                await storeData('jwtToken', token);
+                await storeData('userId', String(userId)); 
                 await storeData('username', username);
-                nav.navigate('HomePage');
+                nav.navigate('LandingPage'); 
             } else if (response.status === 401) {
                 toast.error('Incorrect Password. Please try again.');
             } else {
