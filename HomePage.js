@@ -22,7 +22,7 @@ import { fetchXboxFriends } from "./service/friendsService";
 import { getRecentGames } from "./service/RecentGamesXbox";
 import { fetchRecentNews } from "./service/NewsService";
 import { postNews } from "./service/PostNewsService";
-import { checkAccountType } from "./utility/CheckAccountType";  // Used for "Available on" text
+import { checkAccountType } from "./utility/CheckAccountType";  
 import {
   searchUserProfile,
   getAllLinkedProfiles,
@@ -86,7 +86,7 @@ const HomePage = () => {
         }
         setPlatform(storedPlatform);
 
-        // Pick the right fetcher for the user’s profile
+        // Pick the right fetcher for the user’s profile(in the meantime only xbox available)
         const profileFetchers = {
           xbox: fetchXboxProfile,
           psn: fetchPSNProfile,
@@ -189,7 +189,6 @@ const HomePage = () => {
     }
   };
 
-  // Custom friend list
   const fetchFriendsList = async () => {
     try {
       const list = await getAllFriends();
@@ -293,7 +292,7 @@ const HomePage = () => {
     navigation.navigate("Clips");
   };
   const navigateCommunity = () => {
-    navigation.navigate("Community");
+    navigation.navigate("CommunityPageInsight");
   };
   const navigateNews = () => {
     navigation.navigate("News");
@@ -314,7 +313,6 @@ const HomePage = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* ===== HEADER ===== */}
       <View style={styles.header}>
         <Text style={styles.logo}>GamerHUB</Text>
 
@@ -363,7 +361,7 @@ const HomePage = () => {
           </View>
         </View>
 
-        {/* ACCOUNT INFO (Gamertag, Linked Profiles, etc.) */}
+        {/* account info - gamertag */}
         <View style={styles.accountSection}>
           <View style={styles.gamertagDisplay}>
             <Text style={styles.gamertagText}>
@@ -400,7 +398,7 @@ const HomePage = () => {
           )}
         </View>
 
-        {/* MAILBOX / Pending Friend Requests */}
+        {/* show mailbox if new request pending */}
         {pendingRequests.length > 0 && (
           <View>
             <TouchableOpacity
@@ -428,11 +426,8 @@ const HomePage = () => {
           </View>
         )}
       </View>
-      {/* ===== END HEADER ===== */}
 
-      {/* TWO-COLUMN LAYOUT (mainRow) */}
       <View style={styles.mainRow}>
-        {/* LEFT COLUMN: Selected user, news, recent games */}
         <View style={styles.leftColumn}>
           {/* If user selected from search */}
           {selectedUserProfile && (
@@ -590,9 +585,7 @@ const HomePage = () => {
           </View>
         </View>
 
-        {/* RIGHT COLUMN: My Friends, Xbox Friends */}
         <View style={styles.rightColumn}>
-          {/* My Friends (Custom backend) */}
           <TouchableOpacity
             onPress={toggleFriendsDropDown}
             style={styles.friendsDropDown}
@@ -695,7 +688,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  /* ===== HEADER ===== */
   header: {
     flexDirection: "row",
     alignItems: "flex-start",

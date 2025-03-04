@@ -5,6 +5,8 @@ import React from 'react';
 import LoginPage from './LoginPage'; 
 import HomePage from './HomePage'; 
 import LandingPage from './LandingPage';
+import CommunityPageInsight from './CommunitInsightPage';
+
 const Stack = createNativeStackNavigator();
 
 function MyStack(){
@@ -26,9 +28,14 @@ function MyStack(){
         options={{title: 'HomePage'}}
         />
         <Stack.Screen
-        name='LandingPage' // Corrected screen name
+        name='LandingPage'
         component={LandingPage}
         options={{title: 'LandingPage'}}
+        />
+        <Stack.Screen
+        name="CommunityPageInsight"
+        component={CommunityPageInsight}
+        options={{ title: 'Community Insight' }}
         />
     </Stack.Navigator>
   );

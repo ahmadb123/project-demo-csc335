@@ -8,7 +8,6 @@ const apiUrl = "http://localhost:8080";
 
 export const exchangeCodeForTokens = async () => {
   try {
-    // Get the URL that launched the app (deep link)
     const url = await Linking.getInitialURL();
     if (url) {
       const parsedUrl = new URL(url);
